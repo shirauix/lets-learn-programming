@@ -1,7 +1,7 @@
 // グローバル変数 (どの関数からでも参照できる変数) を定義
 var SLACK_URL = 'https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 var SLACK_USERNAME = 'Slackbot';
-var SLACK_ICON = ':note:';
+var SLACK_ICON = ':memo:';
 
 /*
  * 表示するメッセージを取得する関数

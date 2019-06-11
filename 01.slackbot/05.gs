@@ -3,7 +3,7 @@ var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXXXXXX
 var SHEET_NAME = 'シート1';
 var SLACK_URL = 'https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 var SLACK_USERNAME = 'Slackbot';
-var SLACK_ICON = ':note:';
+var SLACK_ICON = ':memo:';
 
 /*
  * 名前のリストをスプレッドシートから取得する関数
