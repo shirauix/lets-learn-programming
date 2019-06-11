@@ -1,5 +1,5 @@
 // グローバル変数 (どの関数からでも参照できる変数) を定義
-var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXXXXXXXXXXXXXXXX/edit#gid=0'
+var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXXXXXXXXXXXXXXXX/edit#gid=0';
 var SHEET_NAME = 'シート1';
 var SLACK_URL = 'https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 var SLACK_USERNAME = 'Slackbot';
