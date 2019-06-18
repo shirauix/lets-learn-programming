@@ -1,7 +1,32 @@
 // グローバル変数 (どの関数からでも参照できる変数) を定義
+var SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/XXXXXXXXXXXXXXXXXXXXXXXXXXXX/edit#gid=0';
+var SHEET_NAME = 'シート1';
 var SLACK_URL = 'https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 var SLACK_USERNAME = 'Slackbot';
 var SLACK_ICON = ':memo:';
+
+/*
+ * 営業日かどうか判定する関数
+ *
+ * 引数
+ *   date: 日付
+ *
+ * 戻り値
+ *   営業日であればtrue, そうでなければfalse
+ */
+function isBusinessDay(date) {
+  // 曜日を取得 (0が日曜, ..., 6が土曜)
+  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+  var day = date.getDay();
+
+  // 暫定的に、平日であれば営業日とみなす
+  // 日曜か土曜ならfalseを返す。そうでなければtrueを返す。
+  if (day === 0 || day === 6) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 /*
  * 名前のリストをスプレッドシートから取得する関数
@@ -10,10 +35,17 @@ var SLACK_ICON = ':memo:';
  *   名前(文字列)を要素とする配列
  */
 function getNameList() {
-  // ダミーの名前リストを作る
-  var nameList = ['ソウゴ', 'ゲイツ', 'ツクヨミ', 'ウォズ'];
+  // SpreadsheetAppを使ってスプレッドシートの特定のシートを開く
+  // https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app
+  var spreadsheet = SpreadsheetApp.openByUrl(SPREADSHEET_URL);
+  var sheet = spreadsheet.getSheetByName(SHEET_NAME);
 
-  return nameList;
+  // データの存在する範囲を開く
+  var range = sheet.getDataRange();
+  var rows = range.getValues();
+
+  // TODO: rowsから名前を要素とする配列を作る必要がある
+
 }
 
 /*
@@ -91,6 +123,14 @@ function notifyToSlack(slackUrl, message) {
  * 最初に実行される関数
  */
 function main() {
+  // 今日の日付を取得
+  var today = new Date();
+
+  // 今日が営業日でなければ通知しない
+  if (!isBusinessDay(today)) {
+    return;
+  }
+
   // 通知するメッセージを取得
   var message = getMessage();
   

@@ -4,31 +4,14 @@ var SLACK_USERNAME = 'Slackbot';
 var SLACK_ICON = ':memo:';
 
 /*
- * 名前のリストをスプレッドシートから取得する関数
- *
- * 戻り値
- *   名前(文字列)を要素とする配列
- */
-function getNameList() {
-  // ダミーの名前リストを作る
-  var nameList = ['ソウゴ', 'ゲイツ', 'ツクヨミ', 'ウォズ'];
-
-  return nameList;
-}
-
-/*
  * 表示するメッセージを取得する関数
  *
  * 戻り値
  *   メッセージ(文字列)
  */
 function getMessage() {
-  // 名前データを取得    
-  var nameList = getNameList();
-
-  // とりあえず1番目 (インデックスは0) の名前を取り出す
-  var index = 0;
-  var name = nameList[index];
+  // とりあえず名前を決め打ちで定義する
+  var name = 'ソウゴ';
 
   // 表示するメッセージを組み立てる
   var message = name + 'さん、今日の司会をお願いします！';
