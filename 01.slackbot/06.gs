@@ -6,6 +6,29 @@ var SLACK_USERNAME = 'Slackbot';
 var SLACK_ICON = ':memo:';
 
 /*
+ * 営業日かどうか判定する関数
+ *
+ * 引数
+ *   date: 日付
+ *
+ * 戻り値
+ *   営業日であればtrue, そうでなければfalse
+ */
+function isBusinessDay(date) {
+  // 曜日を取得 (0が日曜, ..., 6が土曜)
+  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Date/getDay
+  var day = date.getDay();
+
+  // 暫定的に、平日であれば営業日とみなす
+  // 日曜か土曜ならfalseを返す。そうでなければtrueを返す。
+  if (day === 0 || day === 6) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/*
  * 名前のリストをスプレッドシートから取得する関数
  *
  * 戻り値
@@ -24,13 +47,10 @@ function getNameList() {
   // 名前を要素とする配列を作る
   var nameList = [];
   for (var i = 0; i < rows.length; i++) {
-    // 1行目 (インデックスは0) は見出しなのでスキップする
-    if (i === 0) {
-      continue;
-    }
+    // i行目を取得
+    var row = rows[i];
       
     // 1列目 (インデックスは0) に名前が入っているとみなして、配列に追加する
-    var row = rows[i];
     var name = row[0];
     nameList.push(name);    
   }
@@ -113,6 +133,14 @@ function notifyToSlack(slackUrl, message) {
  * 最初に実行される関数
  */
 function main() {
+  // 今日の日付を取得
+  var today = new Date();
+
+  // 今日が営業日でなければ通知しない
+  if (!isBusinessDay(today)) {
+    return;
+  }
+
   // 通知するメッセージを取得
   var message = getMessage();
   
